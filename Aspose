@@ -1,0 +1,112 @@
+使用Aspose创建doc文件时，可以直接插入html文件，减少了用Aspose的API去创建新的table等一些繁琐的过程。
+//给word模板中设置书签，例如start，然后移动到该书签位置
+builder.moveToBookmark("start");
+//插入html
+builder.insertHtml(html);
+//换页
+builder.insertBreak(1);
+
+
+
+贴一段insertBreak的源码：
+ public void insertBreak(int breakType)
+        throws Exception
+    {
+        zzC(breakType, true);
+    }
+
+    void zzC(int i, boolean flag)
+        throws Exception
+    {
+        switch(i)
+        {
+        case 0: // '\0'
+            insertParagraph();
+            return;
+
+        case 1: // '\001'
+            if(zzXs(flag))
+                zzSg(ControlChar.PAGE_BREAK);
+            return;
+
+        case 2: // '\002'
+            if(zzXs(flag))
+                zzSg(ControlChar.COLUMN_BREAK);
+            return;
+
+        case 4: // '\004'
+            if(zzXs(flag))
+                zzMz(1);
+            return;
+
+        case 5: // '\005'
+            if(zzXs(flag))
+                zzMz(2);
+            return;
+
+        case 3: // '\003'
+            if(zzXs(flag))
+                zzMz(0);
+            return;
+
+        case 6: // '\006'
+            if(zzXs(flag))
+                zzMz(3);
+            return;
+
+        case 7: // '\007'
+            if(zzXs(flag))
+                zzMz(4);
+            return;
+
+        case 8: // '\b'
+            zzSg(ControlChar.LINE_BREAK);
+            return;
+        }
+        if(flag)
+            throw new IllegalStateException("Unknown break type.");
+        else
+            return;
+    }
+    
+     public static final char CELL_CHAR = 7;
+    public static final char TAB_CHAR = 9;
+    public static final char LINE_FEED_CHAR = 10;
+    public static final char LINE_BREAK_CHAR = 11;
+    public static final char PAGE_BREAK_CHAR = 12;
+    public static final char SECTION_BREAK_CHAR = 12;
+    public static final char PARAGRAPH_BREAK_CHAR = 13;
+    public static final char COLUMN_BREAK_CHAR = 14;
+    public static final char FIELD_START_CHAR = 19;
+    public static final char FIELD_SEPARATOR_CHAR = 20;
+    public static final char FIELD_END_CHAR = 21;
+    public static final char NON_BREAKING_HYPHEN_CHAR = 30;
+    public static final char OPTIONAL_HYPHEN_CHAR = 31;
+    public static final char SPACE_CHAR = 32;
+    public static final char NON_BREAKING_SPACE_CHAR = 160;
+    public static final char DEFAULT_TEXT_INPUT_CHAR = 8194;
+    static String zz0C = Character.toString('\001');
+    static String zz0B = Character.toString('\002');
+    static String zz0A = Character.toString('\005');
+    public static String CELL = Character.toString('\007');
+    public static String TAB = Character.toString('\t');
+    public static String LF;
+    public static String LINE_FEED = Character.toString('\n');
+    public static String LINE_BREAK = Character.toString('\013');
+    public static String PAGE_BREAK = Character.toString('\f');    //上面的换页用到此处的静态属性
+    public static String SECTION_BREAK = Character.toString('\f');
+    public static String CR;
+    public static String PARAGRAPH_BREAK = Character.toString('\r');
+    public static String COLUMN_BREAK = Character.toString('\016');
+    public static String CR_LF;
+    static String zz0z = Character.toString('\023');
+    static String zz0y = Character.toString('\024');
+    static String zz0x = Character.toString('\025');
+    static String zz0w = Character.toString('<');
+    static String zz0v = Character.toString('>');
+    static String SPACE = Character.toString(' ');
+    public static String NON_BREAKING_SPACE = Character.toString('\240');
+    static String zz0u = Character.toString('\036');
+    static String zz0t = Character.toString('\037');
+    static String zz0s = Character.toString('\u2011');
+    static String zz0r = Character.toString('\255');
